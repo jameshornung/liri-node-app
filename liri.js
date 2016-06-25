@@ -1,6 +1,10 @@
 //captures the user input on the command line
 var input = process.argv[2];
 
+//variables for spotify
+var spotify = require('spotify');
+var song = '';
+
 //TWITTER==============================================================================
 //variables required for twitter call
 var keys = require('./keys.js');
@@ -16,19 +20,22 @@ if(input == 'my-tweets'){
 			console.log(tweets[i].text);
 		}
 	})
-};
-
+}
 //SPOTIFY===============================================================================
-//variable required for spotify call
-var spotify = require('spotify');
-var song = process.argv[3];
-
-
-if(input='spotify-this-song'){
+else if(input =='spotify-this-song'){
+	for(i=3;i<process.argv.length;i++){
+		var song = song + '+' + process.argv[i];
+	}
 	spotify.search({type: 'track', query: song}, function(err,data){
 		if(!err){
-			console.log(data);
+			console.log('Artist: ' + data.tracks.items[0].artists[0].name);
+			console.log('Album Name: ' + data.tracks.items[0].album.name);
+			console.log('Song Name: ' + data.tracks.items[0].name);
+			console.log('Preview Link: ' + data.tracks.items[0].preview_url);
 		}
 	})
-};
+}
+else if(input == 'movie-this'){
+
+},
 
